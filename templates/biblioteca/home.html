@@ -1,0 +1,68 @@
+{% extends "./base.html" %}
+{% load static %}
+{% block title %}Home{% endblock %}
+{% block content %}
+
+
+<main>
+  <section class="py-5 text-center container">
+    <div class="row py-lg-5">
+      <div class="col-lg-6 col-md-8 mx-auto">
+        <h1 class="h1 fw-bold">Search, Read, Buy, Review</h1>
+        <p class="lead text-muted">Something short and leading about the collection below—its contents, the creator,
+          etc. Make it short and sweet, but not too short so folks don’t simply skip over it entirely.</p>
+        <p>
+          <a href="{% url 'biblioteca:login' %}" class="btn btn-primary my-2">Entre</a>
+          <a href="{% url 'biblioteca:logout' %}" class="btn btn-primary my-2">Sair</a>
+          <a href="{% url 'biblioteca:register' %}" class="btn btn-primary my-2">Cadastro</a>
+          {% comment %} <a href="{% url 'biblioteca:foi' %}" class="btn btn-primary my-2">calendario</a> {% endcomment %}
+        </p>
+      </div>
+    </div>
+  </section>
+
+
+ <form class="d-flex" method="POST" action="{% url 'biblioteca:procurar' %}">
+  {% csrf_token %}
+  <input class="form-control me-2" type="search" id="search" placeholder="Search" aria-label="Search" name="searched">
+<select class="form-select me-2" id="filter2" name="filtro">
+    <option value="titulo">Título</option>
+    <option value="genero">Autor</option>
+    <option value="autor">Editora</option>
+    <option value="data">Data de publicação</option>
+</select>
+  <button class="btn btn-outline-success" type="submit" id="butao">Search</button>
+</form>
+
+  <div class="album py-5">
+    <div class="container">
+
+      <div class="pb-3 h5">Todos os livros</div>
+      <div class="row row-cols-2 row-cols-md-4 g-2">
+
+        {% for product in products %}
+
+        <div class="col">
+          <div class="card h-100" >
+            <img src="{{ product.image.url }}" class="card-img-top" >
+            <div class="card-body">
+              
+                <a class="text-muted text-decoration-none" href="{{ product.get_absolute_url }}">{{ product.titulo }}</a>
+             
+              <div class="d-flex justify-content-between align-items-center">
+                <small class="text-muted"></small>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {% endfor %}
+
+      </div>
+    </div>
+  </div>
+
+
+</main>
+
+{% endblock %}

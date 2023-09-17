@@ -1,0 +1,114 @@
+{% extends './base.html' %}
+{% load static %}
+{% block content %}
+
+{% if perfil %}
+
+	<div class="container text-center">
+		<div class="row">
+			<div class="col-8">
+				<h1>{{ perfil.usuario.username }}'s Profile</h1>
+				<br/>
+			
+
+{% comment %} 			<div class="alert alert-dark" role="alert">
+	<div class="container">
+		<div class="row">
+			<div class="col-1">
+				{% if profile.profile_image %}
+				<img src="{{ profile.profile_image.url }}" width=50 height=50 class="rounded-circle" alt="{{ profile.user.username }}">
+
+				{% else %}
+				<img src="{% static 'images/default_profile_pic.png' %}" width=50 height=50 class="rounded-circle" alt="{{ profile.user.username }}">	
+				{% endif %}
+ {% endcomment %}
+  	
+
+{% if request.usuario.username == perfil.usuario.username %}
+		  	
+				  	
+
+
+			  				</small>
+						</div><br/><br/>
+			</div>
+		</div>
+	</div>
+
+				
+				{% endif %}
+			</div>
+{% comment %} 
+			<div class="col-4">
+				<br/><br/><br/>
+
+				{% if profile.profile_image %}
+				<img src="{{ profile.profile_image.url }}" class="rounded-circle">
+				<br/><br/>
+				{% endif %}
+
+				{% if profile.homepage_link %}
+	<a href="{{ profile.homepage_link }}" target="new">
+				<i class="fa-solid fa-link" style="color:gray"></i></a>
+				{% endif %}
+				&nbsp;&nbsp;
+				{% if profile.facebook_link %}
+	<a href="{{ profile.facebook_link }}" target="new">
+		<i class="fa-brands fa-facebook-f" style="color:gray"></i></a>
+				{% endif %}
+				&nbsp;&nbsp;
+				{% if profile.instagram_link %}
+	<a href="{{ profile.instagram_link }}" target="new">
+		<i class="fa-brands fa-instagram" style="color:gray"></i></a>
+				{% endif %}
+				&nbsp;&nbsp;
+				{% if profile.linkedin_link %}
+	<a href="{{ profile.linkedin_link }}" target="new">
+		<i class="fa-brands fa-linkedin-in" style="color:gray"></i></a>
+				{% endif %}
+<br/><br/> {% endcomment %}
+
+{% comment %} {% if profile.profile_bio %}
+	<p align="justify">
+		{{perfil.profile_bio }}
+	</p>
+{% endif %}
+ {% endcomment %}
+
+<br/><br/>
+				<div class="card">
+  <h5 class="card-header">lista de desejo</h5>
+  <div class="card-body">
+	{% csrf_token %}
+	
+	<a 
+    class="card-header">{{perfil.usuario.username}} <br><br><br>
+	{{perfil.usuario.email}}</a>
+       
+	
+    
+  </div>
+  <div class="card-footer text-end">
+    <a 
+    class="btn btn-sm btn-outline-secondary">See All...</a>
+  </div>
+</div>
+<br/>
+
+
+
+{% endif %}
+
+</form>
+<br/>
+	
+	<!-- Check For Correct User -->
+	{% if request.usuario.id == perfil.usuario.id %}
+		
+	{% endif %}
+			</div>
+		</div>
+	</div>
+
+
+{% endblock %}
