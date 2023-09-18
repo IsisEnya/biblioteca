@@ -9,7 +9,8 @@ https://docs.djangoproject.com/en/4.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
-
+import os
+import dj_database_url
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -22,12 +23,18 @@ GOOGLE_CALENDAR_CREDENTIALS = 'keys.json'
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-ak7p5sz-c(b3mm%d=ub43(nken9d1i@ujpo0y%c_+ett70mx93'
+TOKEN_CSRF = os.getenv('TOKEN_CSRF')
+
+if TOKEN_CSRF:
+    SECRET_KEY = TOKEN_CSRF
+    CSRF_TRUSTED_DRIGINS = ['https://biblioteca-production-f6db.up.railway.app']
+else:
+    SECRET_KEY = 'django-insecure-ak7p5sz-c(b3mm%d=ub43(nken9d1i@ujpo0y%c_+ett70mx93'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = ["biblioteca-production-f6db.up.railway.app","localhost","127.0.0.1"]
 
 
 # Application definition
@@ -89,8 +96,7 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
-import os
-import dj_database_url
+
 
 DATABASE_URL = os.getenv("DATABASE_URL")
 if DATABASE_URL:
