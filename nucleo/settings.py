@@ -9,9 +9,12 @@ https://docs.djangoproject.com/en/4.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
+
 import os
 import dj_database_url
 from pathlib import Path
+
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -27,7 +30,7 @@ TOKEN_CSRF = os.getenv('TOKEN_CSRF')
 
 if TOKEN_CSRF:
     SECRET_KEY = TOKEN_CSRF
-    CSRF_TRUSTED_DRIGINS = ['https://biblioteca-production-f6db.up.railway.app']
+    CSRF_TRUSTED_ORIGINS = ['https://biblioteca-production-f6db.up.railway.app']
 else:
     SECRET_KEY = 'django-insecure-ak7p5sz-c(b3mm%d=ub43(nken9d1i@ujpo0y%c_+ett70mx93'
 
@@ -47,6 +50,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'biblioteca',
+    
+    
 ]
 
 MIDDLEWARE = [
