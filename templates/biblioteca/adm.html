@@ -1,0 +1,22 @@
+{% extends './base.html' %}
+{% load static %}
+{% block content %}
+
+
+<main>
+    <section class="py-5 text-center container">
+      <div class="row py-lg-5">
+        <div class="col-lg-6 col-md-8 mx-auto">
+       
+            <a href="{% url 'biblioteca:criar_genero' %}" class="btn btn-primary my-2">criar genros</a>
+            <a href="{% url 'biblioteca:criar_categoria' %}" class="btn btn-primary my-2">criar categoria</a>
+            <a href="{% url 'biblioteca:criar_produto' %}" class="btn btn-primary my-2">criar produtos</a>
+         
+          </p>
+        </div>
+      </div>
+    </section>
+
+
+
+    {% endblock %}

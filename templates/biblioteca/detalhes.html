@@ -11,13 +11,14 @@
                 <img class="img-fluid mx-auto d-block" width="300px" height="200px" alt="Responsive image" src="{{ product.image.url }}">
             </div>
             <div class="col-md-7 col-lg-7 ps-md-3 ps-lg-5">
-                <h1 class="mb-0 h4">{{ product.titulo }}</h1>
-                <p>Autor: <span class="lead">{{ product.autor }}</span> </p>
-                <p> Editora: <span class="lead">{{ product.editora }}</span></p>
-                <p>{{ product.descrição|slice:":355" }}...</p>
-                <p> Situação: <span class="lead">{{ product.no_estoque }}</span></p>
-                <p> Reservas: <span class="lead">{{ product.reserva }}</span></p>
-                <p>Data de publicação: <span class="lead">{{ product.data_publicacao }}</span></p>
+                <h1 class="mb-0 h4"><b>{{ product.titulo }}</b></h1>
+                <p> <b>Autor:</b> <span class="lead">{{ product.autor }}</span> </p>
+                <p> <b>Editora:</b> <span class="lead">{{ product.editora }}</span></p>
+                <p> <b>Gêneros:</b> <span class="lead">{{ genero.nome }}</span></p>
+                <p> <b>Descrição:</b> <span class="lead"> </span>{{ product.descricao|slice:":355" }}...</span></p>
+                <p> <b>Situação:</b> <span class="lead">{{ product.no_estoque }}</span></p>
+                <p> <b>Reservas:</b> <span class="lead">{{ product.reserva }}</span></p>
+                <p> <b>Data de publicação:</b> <span class="lead">{{ product.data_publicacao }}</span></p>
                 <div class="border">
                     <div class="col border-bottom">
                         <div class="row p-3">
@@ -28,12 +29,22 @@
                     <div class="col">
                         <div class="row p-3">
                             <div class="col-6">
-                                <button type="button" class="btn btn-secondary btn-sm">Adicionar a lista de desejos
-
-                                </button>
-                            </div>
-                            <div class="col-6 text-end"><button type="button" class="btn btn-secondary btn-sm">Reservar</button></div>
+                            {% if product.is_lista_desejos_in  %}
+                                <a href="{% url 'biblioteca:adicionar_desejo' product.id %}" class="btn btn-light fw500" role="button" id="desejoLink">
+                                    Remover da lista de desejos
+                                </a>
+                            {% else %}
+                                <a href="{% url 'biblioteca:adicionar_desejo' product.id %}" class="btn btn-light fw500" role="button" id="desejoLink">
+                                    Adicionar na lista de desejos
+                                </a>
+                            {% endif %}
+                            
+                            <a href="">
+                                <button type="button" class="btn btn-secondary btn-sm">Reservar</button>
+                            </a>
                         </div>
+                    </div>  
+                       
                     </div>
                 </div>
             </div>

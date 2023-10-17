@@ -77,7 +77,7 @@
 
 <br/><br/>
 				<div class="card">
-  <h5 class="card-header">lista de desejo</h5>
+  <h5 class="card-header">Informações</h5>
   <div class="card-body">
 	{% csrf_token %}
 	
@@ -88,10 +88,35 @@
 	
     
   </div>
-  <div class="card-footer text-end">
-    <a 
-    class="btn btn-sm btn-outline-secondary">See All...</a>
+  <h5 class="card-header">lista de desejo</h5>
+  {% if lista_desejos %}
+  {% for product in lista_desejos  %}
+
+  <div class="card mb-3 rounded-0">
+    <div class="row g-0">
+      <div class="col-md-2">
+        
+          <img class="img-fluid d-block p-1" width="135px"  src="{{ product.image.url }}"
+            alt="{{ image.image}}" />
+         
+      </div>
+      <div class="col-md-10">
+        <div class="card-body">
+          <h5 class="card-title">{{product.titulo}}</h5>
+          <a class="text-muted text-decoration-none" href="{{ product.get_absolute_url }}"> {{ product.descricao|slice:":300" }}... </a>
+		  <br><br>
+          
+          <a type="button" class="btn btn-primary fw500 btn-sm" href="{% url 'biblioteca:adicionar_desejo' product.id %}">Remover da lista de desejos</a>
+        </div>
+      </div>
+    </div>
   </div>
+
+  {% endfor %}
+  {% else %}
+  <p class="card-text">Nem um produto foi adicionado na lista de desejos</p>
+  {% endif %}
+
 </div>
 <br/>
 

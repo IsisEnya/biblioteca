@@ -3,12 +3,15 @@ from nucleo import settings
 from .models import Category, Product, Genero, Perfil
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
-from .forms import SignUpForm
+from .forms import SignUpForm,ProductForm, CategoryForm, GeneroForm
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from pprint import pprint
 import datetime
 import os.path
+from django import forms
+from django.http import HttpResponseRedirect
+
 
 
 
@@ -75,22 +78,41 @@ def procurar(request):
     else:
         return render(request, 'biblioteca/procurar.html', {})
 
+#====================================== LISTA DE DESEJO FUNÇAO ===========================================
+@login_required
+def adicionar_desejo(request, id):
+    product = get_object_or_404(Product, id=id)
+    if product.lista_desejos.filter(id = request.user.id).exists():
+          product.lista_desejos.remove(request.user)
+    else:
+          product.lista_desejos.add(request.user)   
+    return HttpResponseRedirect(request.META["HTTP_REFERER"])
+
+#============================================== RESERVA ==================================================
+@login_required
+def adicionar_reserva(request, id):
+    product = get_object_or_404(Product, id=id)
+    if product.reserva.filter(id = request.user.id).exists():
+          product.reserva.remove(request.user)
+    else:
+          product.reserva.add(request.user)   
+    return HttpResponseRedirect(request.META["HTTP_REFERER"])
+
+#============================================= PERFIL ====================================================================
 
 
-#======================================= PERFIL ====================================================================
 
-
-def perfil(request, pk):
+def perfil(request, perfil_id):
+    if request.user.is_authenticated:
+        perfil = Perfil.objects.get(id=perfil_id)
+        #reserva = Product.objects.filter(reserva=request.user)
+        lista_desejos = Product.objects.filter(lista_desejos=request.user)
+        return render(request, "biblioteca/perfil.html", {"perfil": perfil, 'lista_desejos': lista_desejos,})
+    else:
+        messages.success(request, ("Você tem que estar logado para acessar esta página"))
+        return render(request, 'biblioteca/home.html', {})
       
-	if request.user.is_authenticated:
-		perfil = Perfil.objects.get(usuario_id=pk)
-            
-		return render(request, "biblioteca/perfil.html", {"perfil":perfil})
-	else: 
-		messages.success(request, ("Voce tem que logar para acessar essa pagina"))
-            
-			
-		return render(request, 'biblioteca/home.html', {})
+    
 
 
 #============================== LOGIN E LOGOUT ===================
@@ -117,6 +139,8 @@ def logout_usuario(request):
     messages.success(request, "You Have Been Logged Out. Sorry to See You Go...")
     return redirect('biblioteca:todos_livros')
 
+#==================================== REGISTER USUARIO ========================================= #
+
 def register_usuario(request):
 	form = SignUpForm()
 	if request.method == "POST":
@@ -136,6 +160,13 @@ def register_usuario(request):
 	
 	return render(request, "biblioteca/register.html", {'form':form})
 
+
+
+#======================= VER LISTA DE DESEJO ===============================#
+
+
+
+       
 #============================= CALENDARIO ==========================
 '''
 
@@ -182,3 +213,50 @@ def create_google_calendar_event(request):
     event = service.events().insert(calendarId='primary', body=event).execute()
     return HttpResponse(f'Evento criado: {event.get("biblioteca/deucerto.html")}')
 '''
+#------------------------------------------------------------------------------------------
+
+def criar_produto(request):
+    if request.method == 'POST':
+        form = ProductForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            
+    else:
+        form = ProductForm()
+
+
+    return render(request, 'biblioteca/criar_produto.html', {'form': form})
+
+#------------------------------------------------------------------------------------------------
+def criar_genero(request):
+    if request.method == 'POST':
+        form = GeneroForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            
+    else:
+        form = GeneroForm()
+
+
+    return render(request, 'biblioteca/criar_genero.html', {'form': form})
+
+
+#-------------------------------------------------------------------------------------------------------
+
+def criar_categoria(request):
+    if request.method == 'POST':
+        form = CategoryForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            
+    else:
+        form = CategoryForm()
+
+
+    return render(request, 'biblioteca/criar_catego.html', {'form': form})
+
+#-------------------------------------------------------------------------------------------------------
+
+def adm(request):
+
+    return render(request, 'biblioteca/adm.html')

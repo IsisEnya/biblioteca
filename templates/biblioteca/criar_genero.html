@@ -1,0 +1,14 @@
+{% extends './base.html' %}
+{% load static %}
+{% block content %}
+
+<h1>registro de genero</h1>
+
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Enviar Formulário 1">
+</form>
+
+
+{% endblock %}

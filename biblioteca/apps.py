@@ -1,3 +1,4 @@
+
 from django.apps import AppConfig
 
 class BibliotecaConfig(AppConfig):
@@ -7,11 +8,6 @@ class BibliotecaConfig(AppConfig):
 '''
 from django.apps import AppConfig
 from django.contrib.auth.models import User
-
-# Consulta para encontrar usuários com um determinado email
-users_with_email = User.objects.filter(email='email@example.com')
-
-
 
 class BibliotecaConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'

@@ -1,8 +1,30 @@
 from django import forms
-from .models import  Perfil
+from .models import  Perfil, Genero , Category
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 
+
+#--------------------genero-------------------------------------------------------
+class GeneroForm(forms.ModelForm):
+    class Meta:
+		
+        model = Genero
+        fields = '__all__'
+
+#--------------------categoria----------------------------------------------------
+
+class CategoryForm(forms.ModelForm):
+    class Meta:
+        model = Category
+        fields = '__all__'
+#------------------produto-----------------------------------------
+from .models import Product
+
+class ProductForm(forms.ModelForm):
+    class Meta:
+        model = Product
+        fields = '__all__'
+#---------------------------------------------------------------
 
 # Profile Extras Form
 class ProfilePicForm(forms.ModelForm):
