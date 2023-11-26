@@ -1,14 +1,16 @@
 FROM python:3.11.6
 
-WORKDIR /app
+ENV PYTHONUNBUFFERED True
 
-COPY requirements.txt /app
-RUN pip install --no-cache-dir -r requirements.txt -v
+# Copy local code to the container image.
+ENV APP_HOME /app
+WORKDIR $APP_HOME
+COPY . ./
 
+# Install core dependencies.
+RUN apt-get update && apt-get install -y libpq-dev build-essential
 
+# Install production dependencies.
+RUN pip install --no-cache-dir -r requirements.txt
 
-COPY . /app
-RUN python manage.py collectstatic --no-input
-
-EXPOSE 8000
-CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
+CMD ["python", "-u", "main.py"]
