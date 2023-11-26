@@ -9,7 +9,7 @@ from biblioteca import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('biblioteca.urls', namespace='biblioteca')),
-    path('perfil/<int:pk>/', views.perfil, name='perfil')
+    
 ]
 
 

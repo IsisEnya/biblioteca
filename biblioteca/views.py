@@ -11,9 +11,37 @@ import datetime
 import os.path
 from django import forms
 from django.http import HttpResponseRedirect
+from plyer import notification
+import time
+import requests
+from google_auth_oauthlib.flow import InstalledAppFlow
+import pickle
+from django.core.management.base import BaseCommand
+from django.utils import timezone
+from datetime import datetime, timedelta
+from django.core.wsgi import get_wsgi_application
+from googleapiclient.discovery import build
+from google.auth.transport.requests import Request
+from google.oauth2.credentials import Credentials
+from googleapiclient.discovery import build
+from googleapiclient.errors import HttpError
 
 
 
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'seu_projeto.settings')
+application = get_wsgi_application()
+
+#------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+from win10toast import ToastNotifier
+
+def notify_me(title, message, image_path=None):
+    toaster = ToastNotifier()
+    toaster.show_toast(title, message, duration=10, threaded=True, icon_path=image_path)
 
 
 def generos(request):
@@ -26,13 +54,35 @@ def categories(request):
         'categories': Category.objects.all()
     }
 
+#============================================================= CALENDARIO ==========================================================================================
+
+
+def calendario(request):
+    
+
+
+
+    return render(request, 'biblioteca/home.html')
+
+#==================================================== TODOS OS PRODUTOS ===============================================================
+
 
 def all_products(request):
-    products = Product.products.all()
+    products = Product.objects.all().order_by('titulo')
+
+    data_limite = timezone.now() - timedelta(days=3)
+
+    # Obtenha todos os produtos que foram adicionados à reserva há mais de 3 dias
+    produtos_expirados = Product.objects.filter(data_reserva__lt=data_limite)
+
+    # Remova esses produtos da reserva
+    for produto in produtos_expirados:
+        produto.adicionar_reserva.clear() 
+
     return render(request, 'biblioteca/home.html', {'products': products})
 
 
-
+#====================================================================================================================================================
 
 
 def lista_categoria(request, category_slug=None):
@@ -86,16 +136,99 @@ def adicionar_desejo(request, id):
           product.lista_desejos.remove(request.user)
     else:
           product.lista_desejos.add(request.user)   
+          notify_me("Produto Adicionado à Lista de Desejos", f"Você adicionou {product.titulo} à sua lista de desejos.","logoroxa.png")
     return HttpResponseRedirect(request.META["HTTP_REFERER"])
 
-#============================================== RESERVA ==================================================
+
+#============================================== RESERVA SÓ ==================================================
+
 @login_required
 def adicionar_reserva(request, id):
     product = get_object_or_404(Product, id=id)
-    if product.reserva.filter(id = request.user.id).exists():
-          product.reserva.remove(request.user)
+
+    # Verifique se o usuário já adicionou o produto à reserva
+    if product.adicionar_reserva.filter(id=request.user.id).exists():
+        # Se sim, remova-o da reserva
+        product.adicionar_reserva.remove(request.user)
+        
     else:
-          product.reserva.add(request.user)   
+        # Se não, adicione-o à reserva e defina a data de adição
+        product.adicionar_reserva.add(request.user)
+        product.data_reserva = timezone.now()
+        product.save()
+
+        # Notifique o usuário sobre a adição à reserva
+        notify_me("Produto Adicionado à Lista de reserva", f"Você adicionou {product.titulo} à sua lista de reserva.","logoroxa.png")
+
+    return HttpResponseRedirect(request.META["HTTP_REFERER"])
+
+#============================================== RESERVA COM GOOGLE ==================================================
+
+@login_required
+def adicionar_reserva_calendario(request, id):
+    product = get_object_or_404(Product, id=id)
+
+    # Verifique se o usuário já adicionou o produto à reserva
+    if product.adicionar_reserva.filter(id=request.user.id).exists():
+        # Se sim, remova-o da reserva
+        product.adicionar_reserva.remove(request.user)
+        
+    else:
+        # Se não, adicione-o à reserva e defina a data de adição
+        product.adicionar_reserva.add(request.user)
+        product.data_reserva = timezone.now()
+        product.save()
+        
+
+        scopes = ['https://www.googleapis.com/auth/calendar']
+        flow = InstalledAppFlow.from_client_secrets_file("client_secret_100551806101-gj6e3lqlqgd34n4cn7c5s1jb1u8itbch.apps.googleusercontent.com.json", scopes=scopes)
+        credentials = flow.run_local_server(host='localhost', port=8080, authorization_prompt_message='Please visit this URL to authorize this application: {url}', success_message='A autenticação foi concluída com sucesso. Você pode fechar esta janela.', open_browser=True)
+        pickle.dump(credentials, open("token.pkl", "wb"))
+        credentials = pickle.load(open("token.pkl", "rb"))
+        service = build("calendar", "v3", credentials=credentials)
+
+
+        result = service.calendarList().list().execute()
+        result['items'][0]
+
+        calendar_id = result['items'][0]['id']
+        result = service.events().list(calendarId=calendar_id, timeZone="America/Belem").execute()
+        result['items'][0]
+
+        
+
+        # Definindo start_time para daqui a 3 dias
+        start_time = datetime.now() + timedelta(days=3)
+        end_time = start_time + timedelta(hours=4)
+        timezone_str = 'America/Belem'
+
+        event = {
+            'summary': f'Reserva do livro {product.titulo}',
+            'location': 'Satc',
+            'description': 'Esse é o último dia para você poder retirar o livro de sua biblioteca local!',
+            'start': {
+                'dateTime': start_time.strftime("%Y-%m-%dT%H:%M:%S"),
+                'timeZone': timezone_str,
+            },
+            'end': {
+                'dateTime': end_time.strftime("%Y-%m-%dT%H:%M:%S"),
+                'timeZone': timezone_str,
+            },
+            'reminders': {
+                'useDefault': False,
+                'overrides': [
+                    {'method': 'email', 'minutes': 24 * 60},
+                    {'method': 'popup', 'minutes': 10},
+                ],
+            },
+        }
+
+        service.events().insert(calendarId=calendar_id, body=event).execute()
+            
+
+        # Notifique o usuário sobre a adição à reserva
+        notify_me("Produto Adicionado à Lista de reserva", f"Você adicionou {product.titulo} à sua lista de reserva.","logoroxa.png")
+
     return HttpResponseRedirect(request.META["HTTP_REFERER"])
 
 #============================================= PERFIL ====================================================================
@@ -126,10 +259,13 @@ def login_usuario(request):
 
 		if usuario is not None:
 				login(request, usuario)
+                
 				messages.success(request, "You Have Been Logged In! Get MEEPING!")
+
 				return redirect('biblioteca:todos_livros')  # Replace with your actual URL name
 		else:
 				messages.success(request, "There was an error logging in. Please Try Again...")
+                
 				return render(request, "biblioteca/login.html", {})
 	else:
 			return render(request, "biblioteca/login.html", {})
@@ -166,53 +302,6 @@ def register_usuario(request):
 
 
 
-       
-#============================= CALENDARIO ==========================
-'''
-
-def create_google_calendar_event(request):
-    # Autenticar com as credenciais do Google
-    credentials = service_account.Credentials.from_service_account_info(
-    settings.GOOGLE_CALENDAR_CREDENTIALS,
-    scopes=['https://www.googleapis.com/auth/calendar']
-)
-
-    # Construir o serviço do Google Calendar
-    service = build('calendar', 'v3', credentials=credentials)
-
-    # Definir os detalhes do evento
-    event = {
-    'summary': 'Google I/O 2015',
-    'location': '800 Howard St., San Francisco, CA 94103',
-    'description': 'A chance to hear more about Google\'s developer products.',
-    'start': {
-        'dateTime': '2015-05-28T13:00:00-03:00',  # Data e hora no fuso horário de Brasília
-        'timeZone': 'America/Sao_Paulo',  # Fuso horário de Brasília
-    },
-    'end': {
-        'dateTime': '2015-05-28T21:00:00-03:00',  # Data e hora no fuso horário de Brasília
-        'timeZone': 'America/Sao_Paulo',  # Fuso horário de Brasília
-    },
-      'recurrence': [
-        'RRULE:FREQ=DAILY;COUNT=2'
-      ],
-      'attendees': [
-        {'email': 'isisdagostin19@hotmail.com'},
-        {'email': 'isisdagostin@gmail.com'},
-      ],
-      'reminders': {
-        'useDefault': False,
-        'overrides': [
-          {'method': 'email', 'minutes': 24 * 60},
-          {'method': 'popup', 'minutes': 10},
-        ],
-      },
-    }
-
-    # Inserir o evento no calendário
-    event = service.events().insert(calendarId='primary', body=event).execute()
-    return HttpResponse(f'Evento criado: {event.get("biblioteca/deucerto.html")}')
-'''
 #------------------------------------------------------------------------------------------
 
 def criar_produto(request):

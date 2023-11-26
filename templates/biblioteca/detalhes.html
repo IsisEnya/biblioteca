@@ -1,9 +1,718 @@
-{% extends "biblioteca/base.html" %}
+{% extends "./base.html" %}
 {% load static %}
 {% block title %}
 {{ product.name }}
 {% endblock %}
 {% block content %} 
+
+<div id="toast" class="toast">
+  <section>
+    <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/uicons-regular-rounded/css/uicons-regular-rounded.css'>
+            
+            <style> .toast {
+              width: 450px !important;
+              margin: auto;
+              margin-top: 5rem;  
+            } 
+            
+            .toast-content {
+              padding: 15px;
+            }
+            
+            .icon i {
+              font-size: 35px;  
+            }
+            
+            
+            .toast.success {
+              border: 2px solid #6e34d8 !important;
+              color: #6e34d8;
+              background-color: #D2CAE1
+            }
+         
+            </style>
+            
+            <div class="toast align-items-center fade show success" role="alert" aria-live="assertive" aria-atomic="true">
+              <div class="toast-content">
+                <div class="content-body d-flex align-items-center">
+                  <div class="icon me-4">
+                    <i class="fi fi-rr-badge-check d-flex"></i>
+                  </div>
+                  <div class="d-flex justify-content-between w-100">
+                    <div>
+                      <h5 class="fw-bold mb-1">Livro adicionado em sua lista de desejos!</h5>
+                      <p class="text-secondary mb-0">Bem-vindo, Login feito com sucesso.</p> 
+                    </div>     
+                    <div>
+                      <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                    </div>
+                    
+                  </div>          
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+  
+  </section>
+
+
+    <style>
+   *,
+::before, 
+::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html{
+  font-size: 10px;
+  font-family: 'Signika', sans-serif;
+}
+
+img {
+  width: 100%;
+}
+
+body {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2em 5em 2em;
+  margin: 100rem;
+  
+ 
+}
+
+.blog-post {
+  width: 100%;
+  max-width: 130rem;
+  padding: 0.2rem; /* Ajuste esta propriedade para diminuir a altura */
+  background-color: #d2cae1;
+  box-shadow: 0 1.4rem 8rem rgba(0, 0, 0, .2);
+  display: flex;
+  align-items: center;
+  border-radius: .18rem; 
+  margin-bottom: -10%;
+  border-radius: 1rem;
+  margin-top: 15em;
+  border: 0.4rem solid #6E34D8;
+  
+  
+  
+}
+
+.blog-post__img {
+  min-width: 35rem;
+  max-width: 35rem;
+  height: 43rem;
+  transform: translateX(-8rem);
+  position: relative;
+  width: 100%;
+  margin-bottom: -4rem;
+  border: 0.4rem solid #6E34D8;
+  border-radius: 1.3rem;
+}
+
+.blog-post__img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  border-radius: .8rem;
+  
+}
+
+.blog-post__img::before {
+  content: '';
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  box-shadow: 1rem 1rem 6rem 1px rgba(0, 0, 0, .2);
+  
+}
+
+.blog-post__date span {
+  display: block;
+  color: rgba(0, 0, 0, .5);
+  font-size: 2rem;
+  font-weight: 600;
+  margin: .5rem 0;
+}
+
+.blog-post__title {
+  font-size: 3rem;
+  margin: 1.5rem 0 2rem;
+  text-transform: uppercase;
+  color: #6E34D8;
+  font-family: 'Impact'
+}
+
+
+.blog-post__text {
+  margin-bottom: 3rem;
+  font-size: 1.7rem;
+  color: rgba(0, 0, 0, .7);
+}
+
+.blog-post__cta {
+  display: inline-block;
+  padding: 1.5rem 3rem;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  font-size: 1.2rem;
+  color: #fff;
+  background-image: linear-gradient(to left, #4100AC 0%, #6E34D8 100%);
+  border-radius: .8rem;
+  text-decoration: none;
+  transition: all 1s ease-in-out;
+  margin: 0.5rem
+}
+.blog-post__info {
+  margin: 1rem
+}
+
+.blog-post__cta:hover {
+  background-image: linear-gradient(to left, #7756b5 0%, #a36df8 100%);
+}
+
+@media screen and (max-width: 1068px) {
+  .blog-post {
+    max-width: 80rem;
+  }
+  .blog-post__img {
+    min-width: 15rem;
+    max-width: 15rem;
+  }
+}
+
+@media screen and (max-width: 868px) {
+  .blog-post {
+    max-width: 50rem;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .blog-post {
+    padding: 2.5rem;
+    flex-direction: column;
+  }
+  .blog-post__img {
+    min-width: 100%;
+    max-width: 100%;
+    transform: translate(0, -8rem);
+  
+  }  
+}
+
+@media screen and (max-width: 415px) {
+  .blog-post {
+    padding: 2.5rem;
+    flex-direction: column;
+    
+  }
+  .blog-post__img {
+    min-width: 100%;
+    max-width: 100%;
+    transform: translate(0, -8rem);
+  
+  }
+}
+</style>
+
+<script>
+
+</script>
+    <!DOCTYPE html>
+    <html lang="en">
+    
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+        <title>Post Card Responsive</title>
+        <link rel="stylesheet" href="assets/css/index.css" />
+        <link href="https://fonts.googleapis.com/css?family=Signika:300,400&display=swap" rel="stylesheet">
+        
+    </head>
+    
+    <body>
+      
+        <div class="blog-post">
+            <div class="blog-post__img"><img alt="Responsive image" src="{{ product.image.url }}" alt="" /></div>
+            <div class="blog-post__info">
+                
+                <h1 class="blog-post__title"><b>{{ product.titulo }}</b></h1>
+                <div class="blog-post__date"><span><b>Autor: </b> {{ product.autor }}</span><span><b>Editora: </b>{{ product.editora }}</span></div>
+                <div class="blog-post__date"><span><b>Gêneros: </b>{{ product.genero.all|join:", " }}</span>
+                <div class="blog-post__date">{% if product.no_estoque.is == true %}
+                  <p>  <span class="lead"><b>Situação:</b> Disponível</span></p>
+                  {% else %}
+                  <p>  <span class="lead"><b>Situação:</b> Não disponível</span></p>
+                  {% endif %}
+                  <div class="blog-post__date"><span><b>Número de reservas: </b> {{ product.adicionar_reserva.count }}</span><span><b>Data de publicação: </b>{{ product.data_publicacao }}</span></div>
+  
+                  <div class="blog-post__date"><span><b>Descrição: </b></div><p class="blog-post__text"></span>{{ product.descricao|slice:":355" }}...</span></p>
+                <div class="border rounded">
+                  <div class="col border-bottom">
+                      <div class="row p-3">
+                          <div class="col-6"></div>
+                          <div class="col-6 text-end"><span class="h4 fw-bold">Exemplares: {{ product.quantidade }}</span></div>
+                      </div>
+                  </div>
+                  
+                          
+                          
+                          
+                          <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                          <style>
+                            .overlay {
+                              display: none;
+                              position: fixed;
+                              top: 0;
+                              left: 0;
+                              width: 100%;
+                              height: 100%;
+                              background-color: rgba(0, 0, 0, 0.7);
+                              justify-content: center;
+                              align-items: center;
+                            }
+                          
+                            .popup {
+                              background-color: rgb(231, 220, 255);
+                              padding: 5vw; /* Usando unidade de viewport para tornar responsivo */
+                              border-radius: 1rem;
+                              box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+                              position: relative;
+                              font-size: 1.5rem; /* Usando unidade relativa */
+                              color: #333; /* Adicionando a cor do texto */
+                            }
+                          
+                            .close-btn {
+                              cursor: pointer;
+                              position: absolute;
+                              top: 1.5rem;
+                              right: 4rem;
+                              font-size: 5rem !important;
+                            }
+                          
+                            .button {
+                              background-color: #6E34D8;
+                              color: white;
+                              padding: 0.1vh 1vw; /* Usando unidades de viewport */
+                              font-size: 0.5rem;
+                              border-radius: 5px;
+                              border: none;
+                              cursor: pointer;
+                              
+                            }
+                          
+                            .button:hover {
+                              background-color: #9D6AEF;
+                            }
+                          </style>
+                          
+                        <body>
+                        
+                        
+                        <div class="overlay" id="overlay">
+                          <div class="popup">
+                            <span class="close-btn" onclick="closePopup()">&times;</span>
+                            
+                            <img src="https://assets.asana.biz/m/691a9a927b4f9ebc/original/Google-Calendar-Icon.png" style="width: 50px; height: 50px;">
+                            <h1 class="blog-post__title">AVISO!</h1>
+                            <div class="blog-post__date"><b>Quando você reservar, voce terá  3 dias para retira-lo em sua biblioteca local.</div></b>
+                            <p>Você teria interece em salvar a data final de sua reserva em seu google calendar para que não se esqueça?</p>
+                            
+                            <a href="{% url 'biblioteca:adicionar_reserva_calendario' product.id %}" class="button" role="button" id="adicionar_reserva">
+                              <span style="display: flex; align-items: center;">
+                                Sim, adicione no meu calendário
+                                <span id="boot-icon" class="bi bi-calendar2-check-fill" style="font-size: 2rem; color: rgb(210, 183, 255); margin-left: 10px; margin-right: 5px;"></span>
+                              </span>
+                            </a>
+                            
+                            <a href="{% url 'biblioteca:adicionar_reserva' product.id %}" class="button" role="button" id="reserva-btn">
+                              <span style="display: flex; align-items: center;">
+                                Não, Só quero reservar
+                                <span id="boot-icon2" class="bi bi-bookmark-check-fill" style="font-size: 2rem; color: rgb(210, 183, 255); margin-left: 5px;"></span>
+                              </span>
+                            </a>
+                
+                          </div>
+                        </div>
+                        <script>
+                          function showToast(message) {
+                            // Cria um elemento de toast
+                            var toast = document.createElement("div");
+                            toast.className = "toast";
+                            toast.innerHTML = message;
+                        
+                            // Adiciona o toast ao corpo do documento
+                            document.body.appendChild(toast);
+                        
+                            // Define um tempo limite para remover o toast após alguns segundos
+                            setTimeout(function() {
+                              document.body.removeChild(toast);
+                            }, 3000); // 3000 milissegundos (3 segundos) - ajuste conforme necessário
+                          }
+                        
+                          // Adiciona um ouvinte de eventos ao botão de reserva
+                          document.getElementById("reserva-btn").addEventListener("click", function() {
+                            // Chama a função para exibir o toast ao clicar no botão
+                            showToast("Reserva realizada com sucesso!");
+                          });
+                        </script>
+                        
+                        <style>
+                          .toast {
+                            position: fixed;
+                            bottom: 20px;
+                            left: 50%;
+                            transform: translateX(-50%);
+                            background-color: #4CAF50;
+                            color: white;
+                            padding: 15px;
+                            border-radius: 5px;
+                            display: none;
+                          }
+                        </style>
+                        <br>
+                        <div class="container">
+                          <div class="row">
+                              <div class="col-6"><div class="mensagem-erro">
+                                  
+                                </div>
+                            
+                                <button class="blog-post__cta" onclick="openPopup()">Reservar</button>
+                              </div>
+
+                              <div class="col-6 text-end">
+                                <div class="container">
+                                  
+                                  {% if product.id %}
+                                  <a href="{% url 'biblioteca:adicionar_desejo' product.id %}">
+
+                                    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">    
+                                    <span id="boot-icon" class="bi bi-heart-fill" style="font-size: 4rem; color: rgb(110, 52, 216);"></span>
+                                </a>
+                                {% else %}
+                                
+                                <a href="{% url 'biblioteca:adicionar_desejo' product.id %}">
+                                  <span id="boot-icon" class="bi bi-heart" style="font-size: 10rem; color: rgb(0, 0, 0);"></span>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30"  class="bi bi-heart" viewBox="0 0 16 16">
+                                  <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15"/>
+                                </svg>
+                                {% endif %}
+                                
+                              </a>
+                              <script>
+                                document.getElementById("boot-icon").addEventListener("click", function() {
+                                    // Aqui você pode adicionar lógica adicional, se necessário
+                                    popup.style.display = "block";
+                                    setTimeout(hidePopup, 5000);
+                                });
+                            </script>
+                                </div>
+                              </div>
+
+                              <style> .large-font{
+                                font-size:xxx-large;
+                              }
+                              .top-20{
+                                position:relative;
+                                top:20vh;
+                              }
+                              ion-icon.active{
+                                animation:like 0.5s 1;
+                                fill:red;
+                                stroke:none;
+                              }
+                              ion-icon{
+                                fill:transparent;
+                                stroke:black;
+                                stroke-width:30;
+                                transition:all 0.5s;
+                              }
+                              
+                              
+                              @-webkit-keyframes like {
+                                0%   { transform: scale(1); }
+                                90%   { transform: scale(1.2); }
+                                100% { transform: scale(1.1); }
+                              } 
+                              </style>
+                          
+                         
+                        <style>body {
+                          margin: 0;
+                          padding: 0;
+                          -webkit-font-smoothing: antialiased;
+                          font-family: arial;
+                       }
+                        #main-content {
+                          display: flex;
+                          
+                          align-items: center;
+                          justify-content: center;
+                          text-align: center;
+                       }
+                       
+                        a {
+                          font-size: 12px;
+                          font-weight: bold;
+                          margin-top: 10px;
+                          display: inline-block;
+                          text-decoration: none;
+                          color: #000000;
+                       }
+                        svg {
+                          cursor: pointer;
+                          overflow: visible;
+                          width: 60px;
+                       }
+                        svg #heart {
+                          transform-origin: center;
+                          animation: animateHeartOut 0.3s linear forwards;
+                       }
+                        svg #main-circ {
+                          transform-origin: 29.5px 29.5px;
+                       }
+                        #checkbox {
+                          display: none;
+                       }
+                        #checkbox:checked + label svg #heart {
+                          transform: scale(0.2);
+                          fill: #e2264d;
+                          animation: animateHeart 0.3s linear forwards 0.25s;
+                       }
+                        #checkbox:checked + label svg #main-circ {
+                          transition: all 2s;
+                          animation: animateCircle 0.3s linear forwards;
+                          opacity: 1;
+                       }
+                        #checkbox:checked + label svg #grp1 {
+                          opacity: 1;
+                          transition: 0.1s all 0.3s;
+                       }
+                        #checkbox:checked + label svg #grp1 #oval1 {
+                          transform: scale(0) translate(0, -30px);
+                          transform-origin: 0 0 0;
+                          transition: 0.5s transform 0.3s;
+                       }
+                        #checkbox:checked + label svg #grp1 #oval2 {
+                          transform: scale(0) translate(10px, -50px);
+                          transform-origin: 0 0 0;
+                          transition: 1.5s transform 0.3s;
+                       }
+                        #checkbox:checked + label svg #grp2 {
+                          opacity: 1;
+                          transition: 0.1s all 0.3s;
+                       }
+                        #checkbox:checked + label svg #grp2 #oval1 {
+                          transform: scale(0) translate(30px, -15px);
+                          transform-origin: 0 0 0;
+                          transition: 0.5s transform 0.3s;
+                       }
+                        #checkbox:checked + label svg #grp2 #oval2 {
+                          transform: scale(0) translate(60px, -15px);
+                          transform-origin: 0 0 0;
+                          transition: 1.5s transform 0.3s;
+                       }
+                        #checkbox:checked + label svg #grp3 {
+                          opacity: 1;
+                          transition: 0.1s all 0.3s;
+                       }
+                        #checkbox:checked + label svg #grp3 #oval1 {
+                          transform: scale(0) translate(30px, 0px);
+                          transform-origin: 0 0 0;
+                          transition: 0.5s transform 0.3s;
+                       }
+                        #checkbox:checked + label svg #grp3 #oval2 {
+                          transform: scale(0) translate(60px, 10px);
+                          transform-origin: 0 0 0;
+                          transition: 1.5s transform 0.3s;
+                       }
+                        #checkbox:checked + label svg #grp4 {
+                          opacity: 1;
+                          transition: 0.1s all 0.3s;
+                       }
+                        #checkbox:checked + label svg #grp4 #oval1 {
+                          transform: scale(0) translate(30px, 15px);
+                          transform-origin: 0 0 0;
+                          transition: 0.5s transform 0.3s;
+                       }
+                        #checkbox:checked + label svg #grp4 #oval2 {
+                          transform: scale(0) translate(40px, 50px);
+                          transform-origin: 0 0 0;
+                          transition: 1.5s transform 0.3s;
+                       }
+                        #checkbox:checked + label svg #grp5 {
+                          opacity: 1;
+                          transition: 0.1s all 0.3s;
+                       }
+                        #checkbox:checked + label svg #grp5 #oval1 {
+                          transform: scale(0) translate(-10px, 20px);
+                          transform-origin: 0 0 0;
+                          transition: 0.5s transform 0.3s;
+                       }
+                        #checkbox:checked + label svg #grp5 #oval2 {
+                          transform: scale(0) translate(-60px, 30px);
+                          transform-origin: 0 0 0;
+                          transition: 1.5s transform 0.3s;
+                       }
+                        #checkbox:checked + label svg #grp6 {
+                          opacity: 1;
+                          transition: 0.1s all 0.3s;
+                       }
+                        #checkbox:checked + label svg #grp6 #oval1 {
+                          transform: scale(0) translate(-30px, 0px);
+                          transform-origin: 0 0 0;
+                          transition: 0.5s transform 0.3s;
+                       }
+                        #checkbox:checked + label svg #grp6 #oval2 {
+                          transform: scale(0) translate(-60px, -5px);
+                          transform-origin: 0 0 0;
+                          transition: 1.5s transform 0.3s;
+                       }
+                        #checkbox:checked + label svg #grp7 {
+                          opacity: 1;
+                          transition: 0.1s all 0.3s;
+                       }
+                        #checkbox:checked + label svg #grp7 #oval1 {
+                          transform: scale(0) translate(-30px, -15px);
+                          transform-origin: 0 0 0;
+                          transition: 0.5s transform 0.3s;
+                       }
+                        #checkbox:checked + label svg #grp7 #oval2 {
+                          transform: scale(0) translate(-55px, -30px);
+                          transform-origin: 0 0 0;
+                          transition: 1.5s transform 0.3s;
+                       }
+                        #checkbox:checked + label svg #grp2 {
+                          opacity: 1;
+                          transition: 0.1s opacity 0.3s;
+                       }
+                        #checkbox:checked + label svg #grp3 {
+                          opacity: 1;
+                          transition: 0.1s opacity 0.3s;
+                       }
+                        #checkbox:checked + label svg #grp4 {
+                          opacity: 1;
+                          transition: 0.1s opacity 0.3s;
+                       }
+                        #checkbox:checked + label svg #grp5 {
+                          opacity: 1;
+                          transition: 0.1s opacity 0.3s;
+                       }
+                        #checkbox:checked + label svg #grp6 {
+                          opacity: 1;
+                          transition: 0.1s opacity 0.3s;
+                       }
+                        #checkbox:checked + label svg #grp7 {
+                          opacity: 1;
+                          transition: 0.1s opacity 0.3s;
+                       }
+                        @keyframes animateCircle {
+                          40% {
+                            transform: scale(10);
+                            opacity: 1;
+                            fill: #dd4688;
+                         }
+                          55% {
+                            transform: scale(11);
+                            opacity: 1;
+                            fill: #d46abf;
+                         }
+                          65% {
+                            transform: scale(12);
+                            opacity: 1;
+                            fill: #cc8ef5;
+                         }
+                          75% {
+                            transform: scale(13);
+                            opacity: 1;
+                            fill: transparent;
+                            stroke: #cc8ef5;
+                            stroke-width: 0.5;
+                         }
+                          85% {
+                            transform: scale(17);
+                            opacity: 1;
+                            fill: transparent;
+                            stroke: #cc8ef5;
+                            stroke-width: 0.2;
+                         }
+                          95% {
+                            transform: scale(18);
+                            opacity: 1;
+                            fill: transparent;
+                            stroke: #cc8ef5;
+                            stroke-width: 0.1;
+                         }
+                          100% {
+                            transform: scale(19);
+                            opacity: 1;
+                            fill: transparent;
+                            stroke: #cc8ef5;
+                            stroke-width: 0;
+                         }
+                       }
+                        @keyframes animateHeart {
+                          0% {
+                            transform: scale(0.2);
+                         }
+                          40% {
+                            transform: scale(1.2);
+                         }
+                          100% {
+                            transform: scale(1);
+                         }
+                       }
+                        @keyframes animateHeartOut {
+                          0% {
+                            transform: scale(1.4);
+                         }
+                          100% {
+                            transform: scale(1);
+                         }
+                       }
+                        </style>
+                    
+                    
+                        
+                        <script>
+                          // Função para abrir o pop-up
+                          function openPopup() {
+                            document.getElementById('overlay').style.display = 'flex';
+                          }
+                        
+                          // Função para fechar o pop-up
+                          function closePopup() {
+                            document.getElementById('overlay').style.display = 'none';
+                          }
+                        </script>
+                          
+                      </div>
+                  </div>  
+                     
+                  </div>
+              </div>
+          </div>
+      </div>
+  </main>
+
+</div>
+        </div>
+    </body>
+    
+    </html>
+
+
+<!--
 <div class="container">
     <main class="pt-5">
         <div class="row g-3">
@@ -14,10 +723,14 @@
                 <h1 class="mb-0 h4"><b>{{ product.titulo }}</b></h1>
                 <p> <b>Autor:</b> <span class="lead">{{ product.autor }}</span> </p>
                 <p> <b>Editora:</b> <span class="lead">{{ product.editora }}</span></p>
-                <p> <b>Gêneros:</b> <span class="lead">{{ genero.nome }}</span></p>
+                <p> <b>Gêneros:</b> <span class="lead">{{ product.genero.all|join:", " }}</span></p>
                 <p> <b>Descrição:</b> <span class="lead"> </span>{{ product.descricao|slice:":355" }}...</span></p>
-                <p> <b>Situação:</b> <span class="lead">{{ product.no_estoque }}</span></p>
-                <p> <b>Reservas:</b> <span class="lead">{{ product.reserva }}</span></p>
+                {% if product.no_estoque.is == true %}
+                <p> <b>Situação:</b> <span class="lead"> Disponivel</span></p>
+                {% else %}
+                <p> <b>Situação:</b> <span class="lead"> Não disponivel</span></p>
+                {% endif %}
+                <p><b>Reservas:</b> <span class="lead">{{ product.adicionar_reserva.count }}</span></p>
                 <p> <b>Data de publicação:</b> <span class="lead">{{ product.data_publicacao }}</span></p>
                 <div class="border">
                     <div class="col border-bottom">
@@ -29,19 +742,97 @@
                     <div class="col">
                         <div class="row p-3">
                             <div class="col-6">
-                            {% if product.is_lista_desejos_in  %}
+                            
+                              {% if product in request.perfil.lista_desejos.is == true %}
+                            
                                 <a href="{% url 'biblioteca:adicionar_desejo' product.id %}" class="btn btn-light fw500" role="button" id="desejoLink">
                                     Remover da lista de desejos
+                                    
                                 </a>
                             {% else %}
                                 <a href="{% url 'biblioteca:adicionar_desejo' product.id %}" class="btn btn-light fw500" role="button" id="desejoLink">
                                     Adicionar na lista de desejos
+                                    
                                 </a>
+                                <meta charset="UTF-8">
+ 
+                            {% endif %}
+                            {% if request.user.is_authenticated %}
+                            {% else %}
+                                <div class="mensagem-erro">
+                                Você tem que estar logado para adicionar na lista de desejos
+                                </div>
                             {% endif %}
                             
-                            <a href="">
-                                <button type="button" class="btn btn-secondary btn-sm">Reservar</button>
+                            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                           
+                            <style>
+                              /* Estilo para o overlay (fundo escuro) */
+                              .overlay {
+                                display: none;
+                                position: fixed;
+                                top: 0;
+                                left: 0;
+                                width: 100%;
+                                height: 100%;
+                                background-color: rgba(0, 0, 0, 0.7);
+                                justify-content: center;
+                                align-items: center;
+                              }
+                          
+                              /* Estilo para a caixa de pop-up */
+                              .popup {
+                                background-color: #fff;
+                                padding: 20px;
+                                border-radius: 5px;
+                                box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+                                position: relative;
+                              }
+                          
+                              /* Estilo para o botão de fechar */
+                              .close-btn {
+                                cursor: pointer;
+                                position: absolute;
+                                top: 10px;
+                                right: 10px;
+                              }
+                            </style>
+                          </head>
+                          <body>
+                          
+                          
+                          <div class="overlay" id="overlay">
+                            <div class="popup">
+                              <span class="close-btn" onclick="closePopup()">&times;</span>
+                              <p>Voce teria interece em salvar a data final de sua reserva em seu google calendar para que não se esqueça?</p>
+                              
+                              <a href="{% url 'biblioteca:adicionar_reserva_calendario' product.id %}" class="btn btn-light fw500" role="button" id="adicionar_reserva">
+                                Sim
                             </a>
+                            <a href="{% url 'biblioteca:adicionar_reserva' product.id %}" class="btn btn-light fw500" role="button" id="adicionar_reserva">
+                              Não
+                          </a>
+                            
+                            </div>
+                          </div>
+                          
+                          
+                          <div class="btn btn-light fw500">
+                          <button onclick="openPopup()">Reservar</button>
+                          </div>
+                          
+                          <script>
+                            // Função para abrir o pop-up
+                            function openPopup() {
+                              document.getElementById('overlay').style.display = 'flex';
+                            }
+                          
+                            // Função para fechar o pop-up
+                            function closePopup() {
+                              document.getElementById('overlay').style.display = 'none';
+                            }
+                          </script>
+                            
                         </div>
                     </div>  
                        
@@ -52,4 +843,5 @@
     </main>
 
 </div>
+-->
 {% endblock %}

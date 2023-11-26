@@ -1,0 +1,199 @@
+@import url('https://fonts.googleapis.com/css?family=Open+Sans');
+ @import url('https://fonts.googleapis.com/css?family=Open+Sans:800');
+ * {
+	 box-sizing: border-box;
+	 margin: 0;
+	 padding: 0;
+}
+ ::-webkit-scrollbar {
+	 display: none;
+}
+ button {
+	 border: none;
+	 cursor: pointer;
+}
+ button:focus {
+	 outline: 0;
+}
+ .card1 {
+	 width: 60%;
+	 height: auto;
+	 position: absolute;
+	 top: 50%;
+	 left: 50%;
+	 transform: translate(50%, 50%);
+	 display: flex;
+	 align-items: center;
+}
+ .card .left {
+	 width: 480px;
+	 height: 553px;
+	 background: #cc3843;
+	 border-radius: 23px;
+	 display: flex;
+	 align-items: center;
+}
+ .card .left .wordmark {
+	 opacity: 0.2;
+	 transform: rotate(-90deg) scale(1.2);
+	 margin-left: -90px;
+}
+ .card .right {
+	 width: 50%; /* 654 pixels em relação a 1000 pixels (largura do contêiner pai) */
+	 height: 70%;
+	 background: #0c1f2c;
+	 position: absolute;
+	 left: -10%;
+	 transform: translateX(50%);
+	 border-radius: 23px;
+}
+ .card .right .helmet {
+	 position: absolute;
+	 top: 50%;
+	 transform: translate(-50%, -50%);
+}
+ .card .right .productInfo {
+	 width: 300px;
+	 height: 300px;
+	 margin: 50px 0 0 235px;
+	 color: #fff;
+	 font-family: 'Open Sans', sans-serif;
+}
+ .card .right .productInfo h1 {
+	 font-weight: 800;
+	 line-height: 46px;
+	 font-size: 40px;
+	 margin-bottom: 15px;
+}
+ .card .right .productInfo h2 {
+	 font-weight: 300;
+	 font-size: 32px;
+	 letter-spacing: 1.6px;
+	 margin-bottom: 30px;
+}
+ .card .right .productInfo .details {
+	 height: 145px;
+}
+ .card .right .productInfo .details .size, .card .right .productInfo .details .durability {
+	 width: 50%;
+	 float: left;
+}
+ .card .right .productInfo .details .size {
+	 border-right: 1px solid #cb1f40;
+	 padding: 30px 0;
+}
+ .card .right .productInfo .details .durability {
+	 text-align: center;
+}
+ .card .right .productInfo .details .durability h4 {
+	 margin-top: 20px;
+	 margin-bottom: 30px;
+}
+ .card .right .productInfo button {
+	 height: 48px;
+	 background: #cb2140;
+	 border-radius: 90px;
+	 font-weight: 300;
+	 line-height: 35px;
+	 font-size: 14px;
+	 padding: 0 24px;
+	 color: #fff;
+}
+ .card .right .productInfo i.fav {
+	 font-size: 12px;
+	 margin: 0 12px 0 24px;
+	 color: #cb2140;
+}
+ .card .right .productInfo a {
+	 font-size: 12px;
+	 color: #fff;
+	 opacity: 0.3;
+	 text-decoration: none;
+}
+ .card .right .productInfo h3 {
+	 width: 80px;
+	 height: 80px;
+	 font-weight: 300;
+	 line-height: 80px;
+	 font-size: 16px;
+	 margin-left: 30px;
+	 position: relative;
+}
+ .card .right .productInfo h3:after {
+	 content: '';
+	 position: absolute;
+	 width: 80px;
+	 height: 80px;
+	 border-radius: 50%;
+	 border: 2px solid #cb1f40;
+	 border-top-color: transparent;
+	 transform: rotate(-45deg) translate(-50%, -50%);
+}
+ .card .right .productInfo h4 {
+	 font-weight: bold;
+	 line-height: normal;
+	 font-size: 12px;
+	 letter-spacing: 3px;
+	 margin-bottom: 15px;
+}
+ .card .right .productInfo p {
+	 width: 30px;
+	 height: 30px;
+	 display: inline-block;
+	 line-height: normal;
+	 text-align: center;
+	 font-weight: 300px;
+	 line-height: 28px;
+	 font-size: 14px;
+	 border-radius: 50%;
+	 transition: 0.3s linear;
+	 border: 1px solid transparent;
+	 cursor: pointer;
+}
+ .card .right .productInfo p:hover {
+	 border: 1px solid #cb1f40;
+}
+ .card .right .productInfo p:nth-of-type(1) {
+	 border: 1px solid #cb1f40;
+}
+ .slider {
+	 width: 60px;
+	 height: 60px;
+	 background: #fff;
+	 border-radius: 50%;
+	 line-height: 70px;
+	 text-align: center;
+	 margin-left: -30px;
+	 box-shadow: 0 0 60px rgba(0, 0, 0, 0.2);
+	 color: #cb1f40;
+	 cursor: pointer;
+}
+ .slider:nth-of-type(2) {
+	 position: absolute;
+	 top: 50%;
+	 right: -60px;
+	 transform: translate(-50%, -50%);
+}
+ @media screen and (max-width: 320px) {
+	 .card {
+		
+		top: 50%;
+		left: 50%;
+		position: static;
+	}
+}
+ .youtube {
+	 font-family: 'Open Sans', sans-serif;
+	 text-decoration: none;
+	 position: absolute;
+	 right: 2.5vw;
+	 bottom: 2vw;
+	 transform: translate();
+	 animation: clickMe 1s ease-in-out infinite;
+}
+ @keyframes clickMe {
+	 50% {
+		 opacity: 0.5;
+	}
+}
+ 

@@ -1,0 +1,89 @@
+-criar ambiente virtual 
+python -m venv venv
+
+-ativando
+venv/Scripts/Activate
+
+-rodar servidor
+python manage.py runserver
+
+-tem isso aq
+
+python manage.py makemigrations
+ python manage.py migrate
+
+- criar um super usuario(adm)
+python manage.py createsuperuser
+
+railway run python manage.py runserver
+
+----------------------------------------------
+
+-criando projeto
+django-admin startproject nucleo .
+
+-criando o app 
+python manage.py startapp biblioteca
+
+-botando a biblioteca dentro INSTALLED_APPS no settings
+
+- extençao das imagens
+python -m pip install Pillow
+
+-----------------------------
+adm
+123
+
+-------------------------------
+
+git add .
+
+git commit -m "mensagem da atualização"
+
+ 
+
+ pip freeze >  requirements.txt
+
+ --------------------------------------------
+ from django.apps import AppConfig
+from django.contrib.auth.models import User
+
+# Consulta para encontrar usuários com um determinado email
+users_with_email = User.objects.filter(email='email@example.com')
+
+
+
+
+
+
+class BibliotecaConfig(AppConfig):
+    default_auto_field = 'django.db.models.BigAutoField'
+    name = 'biblioteca'
+   
+
+
+    def ready(self):
+        from .models import Perfil
+        import os
+        
+        email = os.getenv("EMAIL_ADMIN")
+        senha = os.getenv("SENHA_ADMIN")
+        usuarios = Perfil.objects.filter(email=email)
+        if not usuarios: 
+            Perfil.objets.create_superuser(username = "admin", email = email, password=senha,
+                                            is_active = True, is_staff = True)
+       
+--------------------------settings----------------------------
+TOKEN_CSRF = os.getenv('TOKEN_CSRF')
+
+if TOKEN_CSRF:
+    SECRET_KEY = TOKEN_CSRF
+    CSRF_TRUSTED_ORIGINS = ['https://biblioteca-production-f6db.up.railway.app']
+else:
+    SECRET_KEY = 'django-insecure-ak7p5sz-c(b3mm%d=ub43(nken9d1i@ujpo0y%c_+ett70mx93'
+
+# SECURITY WARNING: don't run with debug turned on in production!
+DEBUG = True
+
+ALLOWED_HOSTS = ["biblioteca-production-f6db.up.railway.app","localhost","127.0.0.1"]
+

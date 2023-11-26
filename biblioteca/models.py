@@ -73,6 +73,9 @@ class Product(models.Model):
     products = ProductManager()
     data_publicacao = models.DateField(default=datetime.date.today)
     lista_desejos = models.ManyToManyField(User, related_name="lista_desejos", blank=True)
+    adicionar_reserva = models.ManyToManyField(User, related_name="reservas", blank=True)
+    data_reserva = models.DateTimeField(null=True, blank=True)
+
 
     
 
@@ -90,8 +93,10 @@ class Product(models.Model):
 #======================================= USUARIO / PERFIL ======================================================================================================  
 
 class Perfil(models.Model):
-    lista_desejos = models.ManyToManyField(Product, blank=True)
+    lista_desejos = models.ManyToManyField(Product, blank=True, related_name='lista_desejosp')
+    adicionar_reserva = models.ManyToManyField(Product, blank=True, related_name='reservasp')
     usuario = models.OneToOneField(User, on_delete=models.CASCADE)
+    
 
     def __str__(self):
         return self.usuario.username
